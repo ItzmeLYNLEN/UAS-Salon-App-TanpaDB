@@ -8,7 +8,9 @@ package com.mycompany.salonapp;
  *
  * @author M Daffa A
  */
+import java.io.BufferedReader;           // ✅ Tambahkan ini
 import java.io.BufferedWriter;
+import java.io.FileReader;               // ✅ Ini juga dibutuhkan
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.NumberFormat;
@@ -17,13 +19,17 @@ import java.util.Locale;
 import javax.swing.JOptionPane;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import javax.swing.table.DefaultTableModel;
 
 
 public class Salon extends javax.swing.JFrame {
+    
+    
 
     private final HashMap<String, Integer> layananMap = new HashMap<>();
 
     public Salon() {
+        setTitle("Kasir Salon");
         initComponents();
 
         layananMap.put("Potong Rambut", 25000);
@@ -42,7 +48,7 @@ public class Salon extends javax.swing.JFrame {
 // Aksi tombol proses
         jButton1.addActionListener(e -> prosesTransaksi());
     }
-    
+
     private void updateHarga() {
         String layananDipilih = (String) jComboBox1.getSelectedItem();
         boolean isMember = jCheckBox1.isSelected(); // cek status member
@@ -55,97 +61,123 @@ public class Salon extends javax.swing.JFrame {
             // Menampilkan harga ke label (opsional)
             Hargalabel.setText(String.valueOf(formatRupiah(harga)));
 
-            // Menampilkan total harga setelah diskon ke jTextField3
-            jTextField3.setText(String.valueOf(formatRupiah((int) totalSetelahDiskon)));
         }
     }
-    
 
     private void prosesTransaksi() {
-        String nama = jTextField1.getText();
-        String layanan = (String) jComboBox1.getSelectedItem();
-        boolean isMember = jCheckBox1.isSelected();
-        int harga = layananMap.get(layanan);
+    String nama = jTextField1.getText();
+    boolean isMember = jCheckBox1.isSelected();
 
-        double uangDibayar;
-        try {
-            uangDibayar = Double.parseDouble(jTextField2.getText());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Jumlah uang harus berupa angka!");
-            return;
-        }
-
-        double diskon = isMember ? 0.1 : 0.0;
-        double total = harga - (harga * diskon);
-
-        // ❗Cek apakah uang cukup
-        if (uangDibayar < total) {
-            JOptionPane.showMessageDialog(this, "Uang yang dibayarkan tidak cukup untuk membayar total harga!");
-            return;
-        }
-
-        double kembalian = uangDibayar - total;
-        
-        LocalDateTime sekarang = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        String waktuTransaksi = sekarang.format(formatter); 
-
-        String output = "";
-output += "╔══════════════════════════════════════╗\n";
-output += "║         SALON KECANTIKAN CERIA       ║\n";
-output += "╠══════════════════════════════════════╣\n";
-output += "║ Waktu         : " + waktuTransaksi + "\n";
-output += "║ Nama          : " + nama + "\n";
-output += "║ Layanan       : " + layanan + "\n";
-output += "║ Harga         : " + formatRupiah(harga) + "\n";
-output += "║ Member        : " + (isMember ? "Ya" : "Tidak") + "\n";
-output += "║ Total Bayar   : " + formatRupiah(total) + "\n";
-output += "║ Jumlah Bayar  : " + formatRupiah(uangDibayar) + "\n";
-output += "║ Kembalian     : " + formatRupiah(kembalian) + "\n";
-output += "╚══════════════════════════════════════╝\n";
-output += "        Terima kasih atas kunjungan Anda!\n";
-
-jTextArea1.setText(output);
-
-        simpanKeFile(nama, layanan, harga, isMember, total, uangDibayar, kembalian);
-        
-        JOptionPane.showMessageDialog(this, "Transaksi berhasil!\n", "Notifikasi", JOptionPane.INFORMATION_MESSAGE);
-
-        // Reset input
-        jTextField1.setText("");
-        jTextField2.setText("");
-        jCheckBox1.setSelected(false);
-        jComboBox1.setSelectedIndex(0);
+    if (nama.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Nama pelanggan harus diisi!");
+        return;
     }
+
+    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+    if (model.getRowCount() == 0) {
+        JOptionPane.showMessageDialog(this, "Tambahkan minimal satu layanan terlebih dahulu!");
+        return;
+    }
+
+    double totalHarga = 0;
+    StringBuilder detailLayanan = new StringBuilder();
+    for (int i = 0; i < model.getRowCount(); i++) {
+        String layanan = model.getValueAt(i, 0).toString();
+        int harga = (int) model.getValueAt(i, 1);
+        totalHarga += harga;
+        detailLayanan.append("║ ").append(String.format("%-13s : %s\n", layanan, formatRupiah(harga)));
+    }
+
+    double diskon = isMember ? 0.1 : 0.0;
+    double totalSetelahDiskon = totalHarga - (totalHarga * diskon);
+
+    double uangDibayar;
+    try {
+        uangDibayar = Double.parseDouble(jTextField2.getText());
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Jumlah uang harus berupa angka!");
+        return;
+    }
+
+    if (uangDibayar < totalSetelahDiskon) {
+        JOptionPane.showMessageDialog(this, "Uang yang dibayarkan tidak cukup!");
+        return;
+    }
+
+    double kembalian = uangDibayar - totalSetelahDiskon;
+
+    // Tambahkan waktu transaksi
+    LocalDateTime sekarang = LocalDateTime.now();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd MMMM yyyy HH:mm:ss", new Locale("id", "ID"));
+    String waktuTransaksi = sekarang.format(formatter);
+
+    // Format struk
+    StringBuilder output = new StringBuilder();
+    output.append("╔══════════════════════════════════════╗\n");
+    output.append("║       SALON KECANTIKAN CERIA        ║\n");
+    output.append("╠══════════════════════════════════════╣\n");
+    output.append("║ Waktu         : ").append(waktuTransaksi).append("\n");
+    output.append("║ Nama          : ").append(nama).append("\n");
+    output.append(detailLayanan);
+    output.append("║ Member        : ").append(isMember ? "Ya" : "Tidak").append("\n");
+    output.append("║ Total Bayar   : ").append(formatRupiah(totalSetelahDiskon)).append("\n");
+    output.append("║ Jumlah Bayar  : ").append(formatRupiah(uangDibayar)).append("\n");
+    output.append("║ Kembalian     : ").append(formatRupiah(kembalian)).append("\n");
+    output.append("╚══════════════════════════════════════╝\n");
+    output.append("       Terima kasih atas kunjungan Anda!\n");
+
+    jTextArea1.setText(output.toString());
+
+    // Simpan ke file log
+    simpanKeFile(nama, model, isMember, totalSetelahDiskon, uangDibayar, kembalian, waktuTransaksi);
+
+
+    // Notifikasi berhasil
+    JOptionPane.showMessageDialog(this, "Transaksi berhasil!");
+
+    // Reset input (tapi biarkan struk tampil)
+    jTextField1.setText("");
+    jTextField2.setText("");
+    jTextField3.setText("");
+    jCheckBox1.setSelected(false);
+    jComboBox1.setSelectedIndex(0);
+    model.setRowCount(0);
+    jTextField1.setEnabled(true);
+}
+
+
 
     private String formatRupiah(double amount) {
         NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
         return format.format(amount);
     }
 
-    
-    private void simpanKeFile(String nama, String layanan, int harga, boolean isMember, double total, double uangDibayar, double kembalian) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("transaksi_salon.txt", true))) {
-            writer.write("Nama: " + nama);
+    private void simpanKeFile(String nama, DefaultTableModel model, boolean isMember, double total, double uangDibayar, double kembalian, String waktuTransaksi) {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter("transaksi_salon.txt", true))) {
+        writer.write("Waktu Transaksi: " + waktuTransaksi);
+        writer.newLine();
+        writer.write("Nama: " + nama);
+        writer.newLine();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            writer.write("Layanan: " + model.getValueAt(i, 0) + ", Harga: " + formatRupiah((int) model.getValueAt(i, 1)));
             writer.newLine();
-            writer.write("Layanan: " + layanan);
-            writer.newLine();
-            writer.write("Harga: " + formatRupiah(harga));
-            writer.newLine();
-            writer.write("Member: " + (isMember ? "Ya" : "Tidak"));
-            writer.newLine();
-            writer.write("Total Bayar: " + formatRupiah(total));
-            writer.newLine();
-            writer.write("Jumlah Bayar: " + formatRupiah(uangDibayar));
-            writer.newLine();
-            writer.write("Kembalian: " + formatRupiah(kembalian));
-            writer.newLine();
-            writer.write("------------");
-            writer.newLine();
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Gagal menyimpan ke file");
         }
+        writer.write("Member: " + (isMember ? "Ya" : "Tidak"));
+        writer.newLine();
+        writer.write("Total Bayar: " + formatRupiah(total));
+        writer.newLine();
+        writer.write("Jumlah Bayar: " + formatRupiah(uangDibayar));
+        writer.newLine();
+        writer.write("Kembalian: " + formatRupiah(kembalian));
+        writer.newLine();
+        writer.write("------------");
+        writer.newLine();
+    } catch (IOException ex) {
+        JOptionPane.showMessageDialog(this, "Gagal menyimpan ke file");
     }
+}
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -174,6 +206,8 @@ jTextArea1.setText(output);
         jToggleButton1 = new javax.swing.JToggleButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -188,6 +222,11 @@ jTextArea1.setText(output);
 
         jComboBox1.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         jLabel3.setText("Harga: ");
@@ -196,6 +235,11 @@ jTextArea1.setText(output);
 
         jCheckBox1.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         jCheckBox1.setText("Member");
+        jCheckBox1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jCheckBox1StateChanged(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         jLabel4.setText("Jumlah Bayar");
@@ -231,16 +275,27 @@ jTextArea1.setText(output);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Layanan", "Harga"
             }
         ));
         jScrollPane2.setViewportView(jTable1);
+
+        jButton2.setText("Tambah");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Riwayat");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -249,49 +304,59 @@ jTextArea1.setText(output);
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(189, 189, 189)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jToggleButton1))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(22, 22, 22)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jScrollPane1)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel1)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel4))
+                                            .addComponent(jLabel2))
                                         .addGap(43, 43, 43)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(jTextField1)
-                                                    .addComponent(jComboBox1, 0, 169, Short.MAX_VALUE))
-                                                .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(jTextField1)
+                                                .addComponent(jComboBox1, 0, 169, Short.MAX_VALUE))
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(jLabel3)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(Hargalabel)
-                                                .addGap(59, 59, 59)
-                                                .addComponent(jCheckBox1))))))
+                                                .addComponent(Hargalabel))))
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(94, 94, 94)
                                 .addComponent(jLabel5)))
+                        .addGap(36, 36, 36))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addGap(62, 62, 62)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jButton3)
+                        .addGap(65, 65, 65)
+                        .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(88, Short.MAX_VALUE))
+                        .addComponent(jToggleButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(43, 43, 43)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jCheckBox1)))
+                .addContainerGap(303, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -304,9 +369,16 @@ jTextArea1.setText(output);
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(Hargalabel)
-                            .addComponent(jCheckBox1))
-                        .addGap(17, 17, 17)
+                            .addComponent(Hargalabel))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jCheckBox1)
+                        .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -315,27 +387,91 @@ jTextArea1.setText(output);
                                 .addGap(18, 18, 18)
                                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel4))
-                        .addGap(22, 22, 22)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jToggleButton1))
-                .addContainerGap(66, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton1)
+                            .addComponent(jToggleButton1)
+                            .addComponent(jButton3))))
+                .addContainerGap(271, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-         jTextField1.setText("");
+        jTextField1.setText("");
         jTextField2.setText("");
         jTextField3.setText("");
         jCheckBox1.setSelected(false);
         jComboBox1.setSelectedIndex(0);
         jTextArea1.setText("");
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+
     }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void tampilkanRiwayat() {
+    StringBuilder isiRiwayat = new StringBuilder();
+    try (BufferedReader reader = new BufferedReader(new FileReader("transaksi_salon.txt"))) {
+        String baris;
+        while ((baris = reader.readLine()) != null) {
+            isiRiwayat.append(baris).append("\n");
+        }
+        jTextArea1.setText(isiRiwayat.toString());
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(this, "Gagal membaca riwayat transaksi.");
+    }
+}
+
+    
+    private void jCheckBox1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBox1StateChanged
+        // TODO add your handling code here:
+        boolean isMember = jCheckBox1.isSelected();
+    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+    double total = 0;
+    for (int i = 0; i < model.getRowCount(); i++) {
+        int harga = (int) model.getValueAt(i, 1);
+        total += harga;
+    }
+
+    if (isMember) {
+        total = total - (total * 0.1); // diskon 10%
+    }
+
+    jTextField3.setText(formatRupiah(total));
+    }//GEN-LAST:event_jCheckBox1StateChanged
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        String nama = jTextField1.getText();
+        if (nama.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Masukkan nama pelanggan terlebih dahulu.");
+            return;
+        }
+        jTextField1.setEnabled(false);
+        String layanan = (String) jComboBox1.getSelectedItem();
+        int harga = layananMap.get(layanan);
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.addRow(new Object[]{layanan, harga});
+
+        int total = 0;
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+            int Amount = (int) jTable1.getValueAt(i, 1);
+            total = Amount + total;
+        }
+        jTextField3.setText(formatRupiah(total));
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        tampilkanRiwayat();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -375,6 +511,8 @@ jTextArea1.setText(output);
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Hargalabel;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
