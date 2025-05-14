@@ -1,256 +1,3 @@
-Nama: hafidz
-Layanan: Creambath
-Harga: Rp40.000,00
-Member: Ya
-Total Bayar: Rp36.000,00
-Jumlah Bayar: Rp50.000,00
-Kembalian: Rp14.000,00
-------------
-Nama: daoa
-Layanan: Hair Coloring
-Harga: Rp60.000,00
-Member: Ya
-Total Bayar: Rp54.000,00
-Jumlah Bayar: Rp70.000,00
-Kembalian: Rp16.000,00
-------------
-Nama: doaa
-Layanan: Potong Rambut
-Harga: Rp25.000,00
-Member: Ya
-Total Bayar: Rp22.500,00
-Jumlah Bayar: Rp20.000,00
-Kembalian: -Rp2.500,00
-------------
-Nama: daoa
-Layanan: Potong Rambut
-Harga: Rp25.000,00
-Member: Ya
-Total Bayar: Rp22.500,00
-Jumlah Bayar: Rp10.000,00
-Kembalian: -Rp12.500,00
-------------
-Nama: 
-Layanan: Potong Rambut
-Harga: Rp25.000,00
-Member: Ya
-Total Bayar: Rp22.500,00
-Jumlah Bayar: Rp30.000,00
-Kembalian: Rp7.500,00
-------------
-Nama: daoa
-Layanan: Potong Rambut
-Harga: Rp25.000,00
-Member: Tidak
-Total Bayar: Rp25.000,00
-Jumlah Bayar: Rp50.000,00
-Kembalian: Rp25.000,00
-------------
-Nama: Daudy
-Layanan: Potong Rambut
-Harga: Rp25.000,00
-Member: Ya
-Total Bayar: Rp22.500,00
-Jumlah Bayar: Rp50.000,00
-Kembalian: Rp27.500,00
-------------
-Nama: daoa
-Layanan: Hair Coloring
-Harga: Rp60.000,00
-Member: Ya
-Total Bayar: Rp54.000,00
-Jumlah Bayar: Rp60.000,00
-Kembalian: Rp6.000,00
-------------
-Nama: dada
-Layanan: Potong Rambut
-Harga: Rp25.000,00
-Member: Tidak
-Total Bayar: Rp25.000,00
-Jumlah Bayar: Rp100.000,00
-Kembalian: Rp75.000,00
-------------
-Nama: jawa
-Layanan: Hair Coloring
-Harga: Rp60.000,00
-Member: Ya
-Total Bayar: Rp54.000,00
-Jumlah Bayar: Rp200.000,00
-Kembalian: Rp146.000,00
-------------
-Nama: daoa
-Layanan: Hair Coloring
-Harga: Rp60.000,00
-Member: Tidak
-Total Bayar: Rp60.000,00
-Jumlah Bayar: Rp100.000,00
-Kembalian: Rp40.000,00
-------------
-Nama: asda
-Layanan: Hair Coloring
-Harga: Rp60.000,00
-Member: Ya
-Total Bayar: Rp54.000,00
-Jumlah Bayar: Rp60.000,00
-Kembalian: Rp6.000,00
-------------
-Nama: asdds
-Layanan: Hair Coloring
-Harga: Rp60.000,00
-Member: Tidak
-Total Bayar: Rp60.000,00
-Jumlah Bayar: Rp1.000.000,00
-Kembalian: Rp940.000,00
-------------
-Nama: adfa
-Layanan: Hair Coloring
-Harga: Rp60.000,00
-Member: Ya
-Total Bayar: Rp54.000,00
-Jumlah Bayar: Rp100.000,00
-Kembalian: Rp46.000,00
-------------
-Nama: asda
-Layanan: Potong Rambut
-Harga: Rp25.000,00
-Member: Tidak
-Total Bayar: Rp25.000,00
-Jumlah Bayar: Rp30.000,00
-Kembalian: Rp5.000,00
-------------
-Nama: Dewi
-Layanan: Hair Coloring
-Harga: Rp60.000,00
-Member: Ya
-Total Bayar: Rp54.000,00
-Jumlah Bayar: Rp60.000,00
-Kembalian: Rp6.000,00
-------------
-Nama: Silvia
-Layanan: Hair Coloring
-Harga: Rp60.000,00
-Member: Ya
-Total Bayar: Rp54.000,00
-Jumlah Bayar: Rp125.000,00
-Kembalian: Rp71.000,00
-------------
-Nama: daoa
-Layanan: Hair Coloring
-Harga: Rp60.000,00
-Member: Ya
-Total Bayar: Rp54.000,00
-Jumlah Bayar: Rp150.000,00
-Kembalian: Rp96.000,00
-------------
-Nama: Batakx
-Layanan: Hair Coloring
-Harga: Rp60.000,00
-Member: Ya
-Total Bayar: Rp54.000,00
-Jumlah Bayar: Rp100.000,00
-Kembalian: Rp46.000,00
-------------
-Nama: daoa
-Layanan: Hair Coloring
-Harga: Rp60.000,00
-Member: Ya
-Total Bayar: Rp54.000,00
-Jumlah Bayar: Rp150.000,00
-Kembalian: Rp96.000,00
-------------
-Nama: adga
-Layanan: Potong Rambut
-Harga: Rp25.000,00
-Member: Tidak
-Total Bayar: Rp25.000,00
-Jumlah Bayar: Rp50.000,00
-Kembalian: Rp25.000,00
-------------
-Nama: ff
-Layanan: Hair Coloring
-Harga: Rp60.000,00
-Member: Ya
-Total Bayar: Rp54.000,00
-Jumlah Bayar: Rp120.000,00
-Kembalian: Rp66.000,00
-------------
-Nama: as
-Layanan: -
-Harga: Rp0,00
-Member: Ya
-Total Bayar: Rp76.500,00
-Jumlah Bayar: Rp100.000,00
-Kembalian: Rp23.500,00
-------------
-Nama: asdf
-Layanan: -
-Harga: Rp0,00
-Member: Tidak
-Total Bayar: Rp65.000,00
-Jumlah Bayar: Rp100.000,00
-Kembalian: Rp35.000,00
-------------
-Nama: dasa
-Layanan: -
-Harga: Rp0,00
-Member: Ya
-Total Bayar: Rp76.500,00
-Jumlah Bayar: Rp100.000,00
-Kembalian: Rp23.500,00
-------------
-Nama: daoa
-Layanan: Potong Rambut
-Harga: Rp25.000,00
-Member: Ya
-Total Bayar: Rp22.500,00
-Jumlah Bayar: Rp120.000,00
-Kembalian: Rp97.500,00
-------------
-Nama: sdsa
-Layanan: Potong Rambut, Harga: Rp25.000,00
-Layanan: Hair Coloring, Harga: Rp60.000,00
-Member: Ya
-Total Bayar: Rp76.500,00
-Jumlah Bayar: Rp100.000,00
-Kembalian: Rp23.500,00
-------------
-Nama: dsgs
-Layanan: Potong Rambut, Harga: Rp25.000,00
-Layanan: Creambath, Harga: Rp40.000,00
-Member: Ya
-Total Bayar: Rp58.500,00
-Jumlah Bayar: Rp100.000,00
-Kembalian: Rp41.500,00
-------------
-Nama: doaa
-Layanan: Potong Rambut, Harga: Rp25.000,00
-Layanan: Creambath, Harga: Rp40.000,00
-Member: Ya
-Total Bayar: Rp58.500,00
-Jumlah Bayar: Rp60.000,00
-Kembalian: Rp1.500,00
-------------
-Nama: andre
-Layanan: Potong Rambut, Harga: Rp25.000,00
-Layanan: Hair Coloring, Harga: Rp60.000,00
-Member: Ya
-Total Bayar: Rp76.500,00
-Jumlah Bayar: Rp100.000,00
-Kembalian: Rp23.500,00
-------------
-Nama: jawir
-Layanan: Potong Rambut, Harga: Rp25.000,00
-Member: Ya
-Total Bayar: Rp22.500,00
-Jumlah Bayar: Rp25.000,00
-Kembalian: Rp2.500,00
-------------
-Nama: dapp
-Layanan: Potong Rambut, Harga: Rp25.000,00
-Member: Tidak
-Total Bayar: Rp25.000,00
-Jumlah Bayar: Rp25.000,00
-Kembalian: Rp0,00
 ------------
 Waktu Transaksi: Minggu, 11 Mei 2025 12:17:22
 Nama: dapp24
@@ -260,4 +7,79 @@ Member: Ya
 Total Bayar: Rp76.500,00
 Jumlah Bayar: Rp100.000,00
 Kembalian: Rp23.500,00
+------------
+Waktu Transaksi: Senin, 12 Mei 2025 07:03:09
+Nama: dapp
+Layanan: Hair Coloring, Harga: Rp60.000,00
+Layanan: Potong Rambut, Harga: Rp25.000,00
+Member: Ya
+Total Bayar: Rp76.500,00
+Jumlah Bayar: Rp100.000,00
+Kembalian: Rp23.500,00
+------------
+Waktu Transaksi: Rabu, 14 Mei 2025 21:38:39
+Nama: daoa
+Layanan: Potong Rambut, Harga: Rp25.000,00
+Layanan: Creambath, Harga: Rp40.000,00
+Member: Ya
+Total Bayar: Rp58.500,00
+Jumlah Bayar: Rp100.000,00
+Kembalian: Rp41.500,00
+------------
+Waktu Transaksi: Rabu, 14 Mei 2025 22:07:34
+Nama: acx
+Layanan: Potong Rambut, Harga: Rp25.000,00
+Member: Tidak
+Total Bayar: Rp25.000,00
+Jumlah Bayar: Rp30.000,00
+Kembalian: Rp5.000,00
+------------
+Waktu Transaksi: Rabu, 14 Mei 2025 22:16:24
+Nama: daoa
+Layanan: Potong Rambut, Harga: Rp25.000,00
+Member: Tidak
+Total Bayar: Rp25.000,00
+Jumlah Bayar: Rp30.000,00
+Kembalian: Rp5.000,00
+------------
+Waktu Transaksi: Rabu, 14 Mei 2025 22:18:38
+Nama: dapp
+Layanan: Potong Rambut, Harga: Rp25.000,00
+Member: Tidak
+Total Bayar: Rp25.000,00
+Jumlah Bayar: Rp30.000,00
+Kembalian: Rp5.000,00
+------------
+Waktu Transaksi: Rabu, 14 Mei 2025 22:19:13
+Nama: lyn
+Layanan: Potong Rambut, Harga: Rp25.000,00
+Member: Tidak
+Total Bayar: Rp25.000,00
+Jumlah Bayar: Rp25.000,00
+Kembalian: Rp0,00
+------------
+Waktu Transaksi: Rabu, 14 Mei 2025 22:20:03
+Nama: s
+Layanan: Potong Rambut, Harga: Rp25.000,00
+Member: Tidak
+Total Bayar: Rp25.000,00
+Jumlah Bayar: Rp100.000,00
+Kembalian: Rp75.000,00
+------------
+Waktu Transaksi: Rabu, 14 Mei 2025 22:21:23
+Nama: saw
+Layanan: Potong Rambut, Harga: Rp25.000,00
+Member: Tidak
+Total Bayar: Rp25.000,00
+Jumlah Bayar: Rp25.555,00
+Kembalian: Rp555,00
+------------
+Waktu Transaksi: Rabu, 14 Mei 2025 22:21:57
+Nama: dert
+Layanan: Potong Rambut, Harga: Rp25.000,00
+Layanan: Hair Coloring, Harga: Rp60.000,00
+Member: Tidak
+Total Bayar: Rp85.000,00
+Jumlah Bayar: Rp200.000,00
+Kembalian: Rp115.000,00
 ------------

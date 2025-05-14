@@ -8,9 +8,9 @@ package com.mycompany.salonapp;
  *
  * @author M Daffa A
  */
-import java.io.BufferedReader;           // ✅ Tambahkan ini
+import java.io.BufferedReader;           
 import java.io.BufferedWriter;
-import java.io.FileReader;               // ✅ Ini juga dibutuhkan
+import java.io.FileReader;               
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.NumberFormat;
@@ -43,7 +43,7 @@ public class Salon extends javax.swing.JFrame {
 
 // Update harga saat pilihan layanan berubah
         jComboBox1.addActionListener(e -> updateHarga());
-        updateHarga(); // Set harga awal
+        updateHarga(); 
 
 // Aksi tombol proses
         jButton1.addActionListener(e -> prosesTransaksi());
@@ -58,7 +58,7 @@ public class Salon extends javax.swing.JFrame {
             double diskon = isMember ? 0.1 : 0.0;
             double totalSetelahDiskon = harga - (harga * diskon);
 
-            // Menampilkan harga ke label (opsional)
+            // Menampilkan harga ke label 
             Hargalabel.setText(String.valueOf(formatRupiah(harga)));
 
         }
@@ -85,7 +85,7 @@ public class Salon extends javax.swing.JFrame {
         String layanan = model.getValueAt(i, 0).toString();
         int harga = (int) model.getValueAt(i, 1);
         totalHarga += harga;
-        detailLayanan.append("║ ").append(String.format("%-13s : %s\n", layanan, formatRupiah(harga)));
+        detailLayanan.append(" ").append(String.format("%-13s : %s\n", layanan, formatRupiah(harga)));
     }
 
     double diskon = isMember ? 0.1 : 0.0;
@@ -106,24 +106,23 @@ public class Salon extends javax.swing.JFrame {
 
     double kembalian = uangDibayar - totalSetelahDiskon;
 
-    // Tambahkan waktu transaksi
+    
     LocalDateTime sekarang = LocalDateTime.now();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd MMMM yyyy HH:mm:ss", new Locale("id", "ID"));
     String waktuTransaksi = sekarang.format(formatter);
 
     // Format struk
     StringBuilder output = new StringBuilder();
-    output.append("╔══════════════════════════════════════╗\n");
-    output.append("║       SALON KECANTIKAN CERIA        ║\n");
-    output.append("╠══════════════════════════════════════╣\n");
-    output.append("║ Waktu         : ").append(waktuTransaksi).append("\n");
-    output.append("║ Nama          : ").append(nama).append("\n");
+    output.append("       SALON KECANTIKAN CERIA        \n");
+    output.append("|--------------------------------------|\n");
+    output.append(" Waktu         : ").append(waktuTransaksi).append("\n");
+    output.append(" Nama          : ").append(nama).append("\n");
     output.append(detailLayanan);
-    output.append("║ Member        : ").append(isMember ? "Ya" : "Tidak").append("\n");
-    output.append("║ Total Bayar   : ").append(formatRupiah(totalSetelahDiskon)).append("\n");
-    output.append("║ Jumlah Bayar  : ").append(formatRupiah(uangDibayar)).append("\n");
-    output.append("║ Kembalian     : ").append(formatRupiah(kembalian)).append("\n");
-    output.append("╚══════════════════════════════════════╝\n");
+    output.append(" Member        : ").append(isMember ? "Ya" : "Tidak").append("\n");
+    output.append(" Total Bayar   : ").append(formatRupiah(totalSetelahDiskon)).append("\n");
+    output.append(" Jumlah Bayar  : ").append(formatRupiah(uangDibayar)).append("\n");
+    output.append(" Kembalian     : ").append(formatRupiah(kembalian)).append("\n");
+    output.append("|--------------------------------------|\n");
     output.append("       Terima kasih atas kunjungan Anda!\n");
 
     jTextArea1.setText(output.toString());
@@ -207,21 +206,20 @@ public class Salon extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        jLabel1.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         jLabel1.setText("Nama Pengguna");
 
-        jTextField1.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        jTextField1.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         jLabel2.setText("Pilih Layanan");
 
-        jComboBox1.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        jComboBox1.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -229,12 +227,13 @@ public class Salon extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         jLabel3.setText("Harga: ");
 
+        Hargalabel.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         Hargalabel.setText("0");
 
-        jCheckBox1.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        jCheckBox1.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         jCheckBox1.setText("Member");
         jCheckBox1.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -242,38 +241,39 @@ public class Salon extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         jLabel4.setText("Jumlah Bayar");
 
-        jTextField2.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        jTextField2.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
 
         jButton1.setBackground(new java.awt.Color(51, 102, 255));
-        jButton1.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Proses");
 
         jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        jTextArea1.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        jLabel5.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Inter", 1, 36)); // NOI18N
         jLabel5.setText("SALON KECANTIKAN");
 
-        jLabel6.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         jLabel6.setText("Total Harga");
 
-        jTextField3.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        jTextField3.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         jTextField3.setEnabled(false);
 
-        jToggleButton1.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
-        jToggleButton1.setText("Reset");
+        jToggleButton1.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
+        jToggleButton1.setText("Set Ulang");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButton1ActionPerformed(evt);
             }
         });
 
+        jTable1.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -284,6 +284,7 @@ public class Salon extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(jTable1);
 
+        jButton2.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
         jButton2.setText("Tambah");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -291,13 +292,7 @@ public class Salon extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Riwayat");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
+        jButton4.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
         jButton4.setText("Riwayat");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -312,86 +307,60 @@ public class Salon extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2))
+                                .addGap(43, 43, 43)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jTextField1)
+                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(22, 22, 22)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel1)
-                                                    .addComponent(jLabel2))
-                                                .addGap(43, 43, 43)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(jTextField1)
-                                                        .addComponent(jComboBox1, 0, 169, Short.MAX_VALUE))
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addComponent(jLabel3)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(Hargalabel))))
-                                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(94, 94, 94)
-                                        .addComponent(jLabel5)))
-                                .addGap(36, 36, 36))
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(Hargalabel))))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jButton2)
-                                .addGap(62, 62, 62)))
+                                .addGap(26, 26, 26)))
+                        .addGap(64, 64, 64)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addComponent(jButton3)
-                                .addGap(65, 65, 65)
+                                .addComponent(jButton4)
+                                .addGap(85, 85, 85)
                                 .addComponent(jButton1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jToggleButton1))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(43, 43, 43)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jCheckBox1))))
+                            .addComponent(jCheckBox1)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(388, 388, 388)
-                        .addComponent(jButton4)))
-                .addContainerGap(303, Short.MAX_VALUE))
+                        .addGap(322, 322, 322)
+                        .addComponent(jLabel5)))
+                .addContainerGap(186, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5)
+                .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(Hargalabel))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jCheckBox1)
-                        .addGap(10, 10, 10)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -404,10 +373,24 @@ public class Salon extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1)
                             .addComponent(jToggleButton1)
-                            .addComponent(jButton3))))
-                .addGap(33, 33, 33)
-                .addComponent(jButton4)
-                .addContainerGap(215, Short.MAX_VALUE))
+                            .addComponent(jButton4)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(Hargalabel))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(106, Short.MAX_VALUE))
         );
 
         pack();
@@ -483,11 +466,6 @@ public class Salon extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        tampilkanRiwayat();
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         new Riwayat().setVisible(true);
@@ -533,7 +511,6 @@ public class Salon extends javax.swing.JFrame {
     private javax.swing.JLabel Hargalabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox<String> jComboBox1;
