@@ -83,3 +83,73 @@ Total Bayar: Rp85.000,00
 Jumlah Bayar: Rp200.000,00
 Kembalian: Rp115.000,00
 ------------
+Waktu Transaksi: Sabtu, 17 Mei 2025 07:02:31
+Nama: dapp
+Layanan: Creambath, Harga: Rp40.000,00
+Layanan: Potong Rambut, Harga: Rp25.000,00
+Member: Ya
+Total Bayar: Rp58.500,00
+Jumlah Bayar: Rp60.000,00
+Kembalian: Rp1.500,00
+------------
+Waktu Transaksi: Kamis, 22 Mei 2025 14:38:54
+Nama: bowo
+Layanan: Potong Rambut, Harga: Rp25.000,00
+Layanan: Potong Rambut, Harga: Rp25.000,00
+Layanan: Creambath, Harga: Rp40.000,00
+Member: Tidak
+Total Bayar: Rp90.000,00
+Jumlah Bayar: Rp100.000,00
+Kembalian: Rp10.000,00
+------------
+Waktu Transaksi: Kamis, 22 Mei 2025 14:48:24
+Nama: daudy
+Layanan: Creambath, Harga: Rp40.000,00
+Member: Tidak
+Total Bayar: Rp40.000,00
+Jumlah Bayar: Rp50.000,00
+Kembalian: Rp10.000,00
+------------
+Waktu Transaksi: Kamis, 22 Mei 2025 14:50:14
+Nama: ayang
+Layanan: Creambath, Harga: Rp40.000,00
+Layanan: Potong Rambut, Harga: Rp25.000,00
+Layanan: Hair Coloring, Harga: Rp60.000,00
+Member: Ya
+Total Bayar: Rp112.500,00
+Jumlah Bayar: Rp150.000,00
+Kembalian: Rp37.500,00
+------------
+Waktu Transaksi: Kamis, 22 Mei 2025 14:50:53
+Nama: p
+Layanan: Potong Rambut, Harga: Rp25.000,00
+Member: Tidak
+Total Bayar: Rp25.000,00
+Jumlah Bayar: Rp50.000,00
+Kembalian: Rp25.000,00
+------------
+Waktu Transaksi: Kamis, 22 Mei 2025 14:52:54
+Nama: awel
+Layanan: Potong Rambut, Harga: Rp25.000,00
+Member: Ya
+Total Bayar: Rp22.500,00
+Jumlah Bayar: Rp50.000,00
+Kembalian: Rp27.500,00
+------------
+Waktu Transaksi: Senin, 26 Mei 2025 20:00:34
+Nama: daffa
+Layanan: Creambath, Harga: Rp40.000,00
+Layanan: Potong Rambut, Harga: Rp25.000,00
+Member: Ya
+Total Bayar: Rp58.500,00
+Jumlah Bayar: Rp60.000,00
+Kembalian: Rp1.500,00
+------------
+Waktu Transaksi: Senin, 26 Mei 2025 20:03:09
+Nama: daffa
+Layanan: Potong Rambut, Harga: Rp25.000,00
+Member: Tidak
+Total Bayar: Rp25.000,00
+Jumlah Bayar: Rp30.000,00
+Kembalian: Rp5.000,00
+------------

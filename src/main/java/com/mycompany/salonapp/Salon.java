@@ -252,6 +252,7 @@ public class Salon extends javax.swing.JFrame {
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Proses");
 
+        jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         jTextArea1.setRows(5);
