@@ -153,3 +153,12 @@ Total Bayar: Rp25.000,00
 Jumlah Bayar: Rp30.000,00
 Kembalian: Rp5.000,00
 ------------
+Waktu Transaksi: Minggu, 01 Juni 2025 11:29:30
+Nama: daffa
+Layanan: Hair Coloring, Harga: Rp60.000,00
+Layanan: Creambath, Harga: Rp40.000,00
+Member: Ya
+Total Bayar: Rp90.000,00
+Jumlah Bayar: Rp100.000,00
+Kembalian: Rp10.000,00
+------------

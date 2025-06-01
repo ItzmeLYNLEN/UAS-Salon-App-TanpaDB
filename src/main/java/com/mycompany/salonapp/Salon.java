@@ -8,173 +8,94 @@ package com.mycompany.salonapp;
  *
  * @author M Daffa A
  */
-import java.io.BufferedReader;           
-import java.io.BufferedWriter;
-import java.io.FileReader;               
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.NumberFormat;
-import java.util.HashMap;
-import java.util.Locale;
 import javax.swing.JOptionPane;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import javax.swing.table.DefaultTableModel;
+import java.io.IOException;
 
 
 public class Salon extends javax.swing.JFrame {
-    
-    
-
-    private final HashMap<String, Integer> layananMap = new HashMap<>();
+    private final Kasir kasir;
 
     public Salon() {
         setTitle("Kasir Salon");
+        kasir = new Kasir(); // Membuat instance dari Kasir
         initComponents();
-
-        layananMap.put("Potong Rambut", 25000);
-        layananMap.put("Creambath", 40000);
-        layananMap.put("Hair Coloring", 60000);
-
+        
+        // Mengisi ComboBox dari data yang ada di kelas Kasir
         jComboBox1.removeAllItems();
-        for (String layanan : layananMap.keySet()) {
+        for (String layanan : kasir.getLayananMap().keySet()) {
             jComboBox1.addItem(layanan);
         }
 
 // Update harga saat pilihan layanan berubah
-        jComboBox1.addActionListener(e -> updateHarga());
-        updateHarga(); 
+         jComboBox1.addActionListener(e -> updateHarga());
 
-// Aksi tombol proses
-        jButton1.addActionListener(e -> prosesTransaksi());
+
+        updateHarga(); 
     }
 
     private void updateHarga() {
         String layananDipilih = (String) jComboBox1.getSelectedItem();
-        boolean isMember = jCheckBox1.isSelected(); // cek status member
-
-        if (layananDipilih != null && layananMap.containsKey(layananDipilih)) {
-            int harga = layananMap.get(layananDipilih);
-            double diskon = isMember ? 0.1 : 0.0;
-            double totalSetelahDiskon = harga - (harga * diskon);
-
-            // Menampilkan harga ke label 
-            Hargalabel.setText(String.valueOf(formatRupiah(harga)));
-
+        if (layananDipilih != null) {
+            int harga = kasir.getLayananMap().get(layananDipilih);
+            Hargalabel.setText(kasir.formatRupiah(harga));
         }
+    }
+    
+    private void updateTotalHarga() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        double total = 0;
+        for (int i = 0; i < model.getRowCount(); i++) {
+            total += (int) model.getValueAt(i, 1);
+        }
+
+        if (jCheckBox1.isSelected()) {
+            total -= total * 0.1; // diskon 10%
+        }
+
+        jTextField3.setText(kasir.formatRupiah(total));
     }
 
     private void prosesTransaksi() {
-    String nama = jTextField1.getText();
-    boolean isMember = jCheckBox1.isSelected();
+     try {
+            String nama = jTextField1.getText();
+            boolean isMember = jCheckBox1.isSelected();
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            double uangDibayar = Double.parseDouble(jTextField2.getText());
 
-    if (nama.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Nama pelanggan harus diisi!");
-        return;
+            // Panggil method di kelas kasir untuk memproses dan membuat struk
+            String struk = kasir.buatStruk(nama, model, isMember, uangDibayar);
+
+            // Jika berhasil, tampilkan struk dan notifikasi
+            jTextArea1.setText(struk);
+            JOptionPane.showMessageDialog(this, "Transaksi berhasil!");
+            
+            // Reset beberapa field setelah transaksi sukses
+            resetInputTransaksi();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Jumlah uang harus berupa angka!");
+        } catch (Exception ex) {
+            // Menangkap pesan error dari kelas Kasir (misal: "Uang tidak cukup")
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+}
+        
+    private void resetInputTransaksi(){
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jCheckBox1.setSelected(false);
+        jComboBox1.setSelectedIndex(0);
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        jTextField1.setEnabled(true);
     }
 
-    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-    if (model.getRowCount() == 0) {
-        JOptionPane.showMessageDialog(this, "Tambahkan minimal satu layanan terlebih dahulu!");
-        return;
-    }
-
-    double totalHarga = 0;
-    StringBuilder detailLayanan = new StringBuilder();
-    for (int i = 0; i < model.getRowCount(); i++) {
-        String layanan = model.getValueAt(i, 0).toString();
-        int harga = (int) model.getValueAt(i, 1);
-        totalHarga += harga;
-        detailLayanan.append(" ").append(String.format("%-13s : %s\n", layanan, formatRupiah(harga)));
-    }
-
-    double diskon = isMember ? 0.1 : 0.0;
-    double totalSetelahDiskon = totalHarga - (totalHarga * diskon);
-
-    double uangDibayar;
-    try {
-        uangDibayar = Double.parseDouble(jTextField2.getText());
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Jumlah uang harus berupa angka!");
-        return;
-    }
-
-    if (uangDibayar < totalSetelahDiskon) {
-        JOptionPane.showMessageDialog(this, "Uang yang dibayarkan tidak cukup!");
-        return;
-    }
-
-    double kembalian = uangDibayar - totalSetelahDiskon;
 
     
-    LocalDateTime sekarang = LocalDateTime.now();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd MMMM yyyy HH:mm:ss", new Locale("id", "ID"));
-    String waktuTransaksi = sekarang.format(formatter);
 
-    // Format struk
-    StringBuilder output = new StringBuilder();
-    output.append("       SALON KECANTIKAN CERIA        \n");
-    output.append("|--------------------------------------|\n");
-    output.append(" Waktu         : ").append(waktuTransaksi).append("\n");
-    output.append(" Nama          : ").append(nama).append("\n");
-    output.append(detailLayanan);
-    output.append(" Member        : ").append(isMember ? "Ya" : "Tidak").append("\n");
-    output.append(" Total Bayar   : ").append(formatRupiah(totalSetelahDiskon)).append("\n");
-    output.append(" Jumlah Bayar  : ").append(formatRupiah(uangDibayar)).append("\n");
-    output.append(" Kembalian     : ").append(formatRupiah(kembalian)).append("\n");
-    output.append("|--------------------------------------|\n");
-    output.append("       Terima kasih atas kunjungan Anda!\n");
-
-    jTextArea1.setText(output.toString());
-
-    // Simpan ke file log
-    simpanKeFile(nama, model, isMember, totalSetelahDiskon, uangDibayar, kembalian, waktuTransaksi);
-
-
-    // Notifikasi berhasil
-    JOptionPane.showMessageDialog(this, "Transaksi berhasil!");
-
-    // Reset input (tapi biarkan struk tampil)
-    jTextField1.setText("");
-    jTextField2.setText("");
-    jTextField3.setText("");
-    jCheckBox1.setSelected(false);
-    jComboBox1.setSelectedIndex(0);
-    model.setRowCount(0);
-    jTextField1.setEnabled(true);
-}
-
-
-
-    private String formatRupiah(double amount) {
-        NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
-        return format.format(amount);
-    }
-
-    private void simpanKeFile(String nama, DefaultTableModel model, boolean isMember, double total, double uangDibayar, double kembalian, String waktuTransaksi) {
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter("transaksi_salon.txt", true))) {
-        writer.write("Waktu Transaksi: " + waktuTransaksi);
-        writer.newLine();
-        writer.write("Nama: " + nama);
-        writer.newLine();
-        for (int i = 0; i < model.getRowCount(); i++) {
-            writer.write("Layanan: " + model.getValueAt(i, 0) + ", Harga: " + formatRupiah((int) model.getValueAt(i, 1)));
-            writer.newLine();
-        }
-        writer.write("Member: " + (isMember ? "Ya" : "Tidak"));
-        writer.newLine();
-        writer.write("Total Bayar: " + formatRupiah(total));
-        writer.newLine();
-        writer.write("Jumlah Bayar: " + formatRupiah(uangDibayar));
-        writer.newLine();
-        writer.write("Kembalian: " + formatRupiah(kembalian));
-        writer.newLine();
-        writer.write("------------");
-        writer.newLine();
-    } catch (IOException ex) {
-        JOptionPane.showMessageDialog(this, "Gagal menyimpan ke file");
-    }
-}
+    
 
 
 
@@ -251,6 +172,11 @@ public class Salon extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Proses");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
@@ -410,47 +336,23 @@ public class Salon extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        jTextField1.setText("");
-        jTextField2.setText("");
-        jTextField3.setText("");
-        jCheckBox1.setSelected(false);
-        jComboBox1.setSelectedIndex(0);
+        resetInputTransaksi();
         jTextArea1.setText("");
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
-
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void tampilkanRiwayat() {
-    StringBuilder isiRiwayat = new StringBuilder();
-    try (BufferedReader reader = new BufferedReader(new FileReader("transaksi_salon.txt"))) {
-        String baris;
-        while ((baris = reader.readLine()) != null) {
-            isiRiwayat.append(baris).append("\n");
+        try {
+            String riwayat = kasir.bacaRiwayat();
+            jTextArea1.setText(riwayat);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Gagal membaca riwayat transaksi.");
         }
-        jTextArea1.setText(isiRiwayat.toString());
-    } catch (IOException e) {
-        JOptionPane.showMessageDialog(this, "Gagal membaca riwayat transaksi.");
     }
-}
 
     
     private void jCheckBox1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBox1StateChanged
         // TODO add your handling code here:
-        boolean isMember = jCheckBox1.isSelected();
-    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-
-    double total = 0;
-    for (int i = 0; i < model.getRowCount(); i++) {
-        int harga = (int) model.getValueAt(i, 1);
-        total += harga;
-    }
-
-    if (isMember) {
-        total = total - (total * 0.1); // diskon 10%
-    }
-
-    jTextField3.setText(formatRupiah(total));
+        updateTotalHarga();
     }//GEN-LAST:event_jCheckBox1StateChanged
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -460,19 +362,15 @@ public class Salon extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Masukkan nama pelanggan terlebih dahulu.");
             return;
         }
-        jTextField1.setEnabled(false);
+        jTextField1.setEnabled(false); // Kunci nama pelanggan setelah layanan pertama ditambahkan
+        
         String layanan = (String) jComboBox1.getSelectedItem();
-        int harga = layananMap.get(layanan);
+        int harga = kasir.getLayananMap().get(layanan);
 
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.addRow(new Object[]{layanan, harga});
-
-        int total = 0;
-        for (int i = 0; i < jTable1.getRowCount(); i++) {
-            int Amount = (int) jTable1.getValueAt(i, 1);
-            total = Amount + total;
-        }
-        jTextField3.setText(formatRupiah(total));
+        
+        updateTotalHarga(); // Panggil method untuk update total
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -487,29 +385,22 @@ public class Salon extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        int selectedRow = jTable1.getSelectedRow();
-    if (selectedRow == -1) {
-        JOptionPane.showMessageDialog(this, "Pilih layanan yang ingin dihapus dari tabel!");
-        return;
-    }
+         int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Pilih layanan yang ingin dihapus dari tabel!");
+            return;
+        }
 
-    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-    model.removeRow(selectedRow);
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.removeRow(selectedRow);
 
-    // Hitung ulang total
-    boolean isMember = jCheckBox1.isSelected();
-    double total = 0;
-    for (int i = 0; i < model.getRowCount(); i++) {
-        int harga = (int) model.getValueAt(i, 1);
-        total += harga;
-    }
-
-    if (isMember) {
-        total *= 0.9;
-    }
-
-    jTextField3.setText(formatRupiah(total));
+        updateTotalHarga(); // Panggil method untuk update total
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        prosesTransaksi();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
