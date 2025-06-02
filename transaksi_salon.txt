@@ -162,3 +162,38 @@ Total Bayar: Rp90.000,00
 Jumlah Bayar: Rp100.000,00
 Kembalian: Rp10.000,00
 ------------
+Waktu Transaksi: Minggu, 01 Juni 2025 20:26:43
+Nama: daren
+Layanan: Hair Coloring, Harga: Rp60.000,00
+Layanan: Potong Rambut, Harga: Rp25.000,00
+Member: Ya
+Total Bayar: Rp76.500,00
+Jumlah Bayar: Rp100.000,00
+Kembalian: Rp23.500,00
+------------
+Waktu Transaksi: Minggu, 01 Juni 2025 21:10:06
+Nama: daffira
+Layanan: Creambath, Harga: Rp40.000,00
+Layanan: Potong Rambut, Harga: Rp25.000,00
+Member: Ya
+Total Bayar: Rp58.500,00
+Jumlah Bayar: Rp60.000,00
+Kembalian: Rp1.500,00
+------------
+Waktu Transaksi: Minggu, 01 Juni 2025 21:10:48
+Nama: andim
+Layanan: Hair Coloring, Harga: Rp60.000,00
+Member: Tidak
+Total Bayar: Rp60.000,00
+Jumlah Bayar: Rp60.000,00
+Kembalian: Rp0,00
+------------
+Waktu Transaksi: Minggu, 01 Juni 2025 21:21:48
+Nama: daff
+Layanan: Potong Rambut, Harga: Rp25.000,00
+Layanan: Waxing, Harga: Rp50.000,00
+Member: Ya
+Total Bayar: Rp67.500,00
+Jumlah Bayar: Rp70.000,00
+Kembalian: Rp2.500,00
+------------

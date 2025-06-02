@@ -54,16 +54,16 @@ public class Riwayat extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(214, 194, 240));
 
         jTextArea1.setEditable(false);
-        jTextArea1.setBackground(new java.awt.Color(242, 242, 242));
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
         jLabel1.setFont(new java.awt.Font("Inter", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Riwayat Pembayaran");
 
         jButton2.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N

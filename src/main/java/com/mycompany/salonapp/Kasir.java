@@ -26,6 +26,7 @@ public class Kasir {
         layananMap.put("Potong Rambut", 25000);
         layananMap.put("Creambath", 40000);
         layananMap.put("Hair Coloring", 60000);
+        layananMap.put("Waxing", 50000);
     }
     
     public HashMap<String, Integer> getLayananMap() {
