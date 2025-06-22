@@ -197,3 +197,20 @@ Total Bayar: Rp67.500,00
 Jumlah Bayar: Rp70.000,00
 Kembalian: Rp2.500,00
 ------------
+Waktu Transaksi: Senin, 02 Juni 2025 16:38:52
+Nama: tegar
+Layanan: Potong Rambut, Harga: Rp25.000,00
+Member: Ya
+Total Bayar: Rp22.500,00
+Jumlah Bayar: Rp30.000,00
+Kembalian: Rp7.500,00
+------------
+Waktu Transaksi: Minggu, 22 Juni 2025 14:27:04
+Nama: daoa
+Layanan: Potong Rambut, Harga: Rp25.000,00
+Layanan: Creambath, Harga: Rp40.000,00
+Member: Ya
+Total Bayar: Rp58.500,00
+Jumlah Bayar: Rp60.000,00
+Kembalian: Rp1.500,00
+------------
